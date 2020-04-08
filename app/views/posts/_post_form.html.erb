@@ -16,12 +16,12 @@
           <%= link_to post.user.name, user_path(post.user) %>
         </div>
       </div>
-
+        
       <%=link_to post_path(post) do%>
         <%= image_tag post.image, class: 'main-image' %>
       <%end %>
 
-      <div class="caption">
+      <div class="description">
         <% post.caption.to_s.split(' ').each do |word| %>
           <% if word.start_with?('#') %>
             <%= link_to word, search_path(query: word) %>
@@ -31,29 +31,44 @@
         <% end %>
       </div>
 
-      <div>
-        <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
-        <% if pre_like %>
-          <%= button_to 'Unlike', post_like_path(post, pre_like), method: :delete, remote: true %>
-        <% else %>
-          <%= button_to 'Like', post_likes_path(post), method: :post, remote: true %>
-        <% end %>
-
-        <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
-      </div>
-
-      <h3><%= post.comments.count%> Comments </h3>
-
-      <%=render :partial => post.comments%>
-
-      <br>
-      <div>
+      <div class="row">
+        <div class="col-lg-1">
+          <div id="like">
+            <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
+            <% if pre_like %>
+              <%= link_to raw("<i class=\"fa fa-thumbs-o-down \"></i>"), post_like_path(post, pre_like), method: :delete, remote: true %>     
+            <% else %>
+              <%= link_to raw("<i class=\"fa fa-thumbs-o-up\"></i>"), post_likes_path(post), method: :post, remote: true %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-1">
+          <div id="comment">
+            <%= link_to raw("<i class=\"fa fa-comment-o\"></i>"),"#", id:"show_comment" %>
+          </div>
+        </div>
+        <div class="col-lg-1">
+          <div id="share">
+            <%= link_to raw("<i class=\"fa fa-bullhorn\"></i>"), post_path(post)%>
+          </div>
+        </div>
+      </div> 
+      <div id="comment_tab">
+      <p id="like_count"><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+        <%= render :partial => post.comments %>  
         <%= form_for :comment ,url: post_comments_url(post_id: post.id) do |f| %>
-          <%= f.label :content %>
-          <%= f.text_area :content, class: 'form-control' %>
-          <%= f.submit "Save"%>
+          <div class="row">
+            <div class="col-lg-10">
+              <%= f.text_area :content, class: 'form-control' %>
+            </div>
+            <div class="col-lg-2">
+              <%= f.submit "Comment"%>
+            </div>
+          </div>
         <% end %>
       </div>
     </section>
   <%end%>
 </div>
+
+
