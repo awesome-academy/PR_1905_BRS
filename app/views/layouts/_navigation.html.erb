@@ -4,8 +4,7 @@
     <div class="logo">
     <%if logged_in?%>
       <a class="navbar-brand" href="/index">
-      <i class="fa fa-camera-retro" aria-hidden="true"></i>
-        Filmy
+        <%= image_tag("Logo.png",height:'40px') %>
       </a>
     <%else%>
       <a class="navbar-brand" href="/#root">

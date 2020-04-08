@@ -349,6 +349,11 @@ footer {
   }
 }
 
+.btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover{
+  background-color: none !important;
+  border-color: none !important;
+}
+
 .profile .basic-info{
   padding: 40px 0;
   .user-wrapper{
@@ -494,4 +499,8 @@ footer {
   input[type='submit']{
     color: white;
   }
+}
+#query{
+  margin-top:10px;
+  margin-bottom: 10px;
 }
